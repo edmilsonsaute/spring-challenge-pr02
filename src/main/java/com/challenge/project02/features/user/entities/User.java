@@ -1,8 +1,10 @@
 package com.challenge.project02.features.user.entities;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
@@ -34,6 +36,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    
+    @CreationTimestamp
+    @Column(name="created_at",nullable=false,updatable=false)
+    private LocalDateTime createdAt;
+
     @ManyToMany
     @JoinTable(
         name = "user_roles",
@@ -41,6 +48,7 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
 
     public UUID getId() {
         return id;
@@ -72,6 +80,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDateTime getCreatedAt(){
+        return createdAt;
     }
 
     public Set<Role> getRoles() {
@@ -113,9 +125,9 @@ public class User {
         return true;
     }
 
-        @Override
+    @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", emai=" +email +" ]";
+        return "User [id=" + id + ", username=" + username + ", email=" + email + " ]";
     }
 
     
