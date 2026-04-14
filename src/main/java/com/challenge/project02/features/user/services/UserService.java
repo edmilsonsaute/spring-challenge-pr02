@@ -1,6 +1,8 @@
 package com.challenge.project02.features.user.services;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -46,5 +48,22 @@ public class UserService {
                 user.getEmail(), user.getCreatedAt());
 
         return userResponseDTO;
+    }
+
+    public List<UserResponseDTO> listarUsuarios(){
+
+        List<User> lista = userRepository.findAll();
+
+        if(lista == null){
+            new RuntimeException("Sem dados");
+        }
+
+        List<UserResponseDTO> usuarios = new ArrayList<>();
+
+        for(User user : lista){
+            usuarios.add(new UserResponseDTO(user.getId().toString(), user.getUsername(), user.getEmail(), user.getCreatedAt()));
+        }
+
+        return usuarios;
     }
 }
