@@ -1,7 +1,8 @@
 package com.challenge.project02.features.user.DTOs;
 
 public record UserAuthResponseDTO(
-    String token
+    String accessToken,
+    String refreshToken
 ) {
     
 }

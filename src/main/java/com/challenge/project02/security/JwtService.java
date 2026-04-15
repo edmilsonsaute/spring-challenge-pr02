@@ -32,11 +32,20 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateRefreshToken(UserDetails userDetails){
         return Jwts.builder()
             .subject(userDetails.getUsername())
             .issuedAt(new Date())
             .expiration(new Date(System.currentTimeMillis() + expiration))
+            .signWith(getSignKey())
+            .compact();
+    }
+
+       public String generateAccessToken(UserDetails userDetails){
+        return Jwts.builder()
+            .subject(userDetails.getUsername())
+            .issuedAt(new Date())
+            .expiration(new Date(System.currentTimeMillis() + 180000))
             .signWith(getSignKey())
             .compact();
     }
